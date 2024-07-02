@@ -1,0 +1,41 @@
+name: Minify, Uglify and Gzip
+
+on:
+  push:
+    branches:
+      - main  # Leda meeku kavalsina branch specify cheyandi
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Meeku kavalsina Node.js version specify cheyandi
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Minify and Uglify
+      run: |
+        npx terser src/yourfile.js -o dist/yourfile.min.js --compress --mangle
+        # Inka files or folders add cheyachu
+
+    - name: Gzip
+      run: gzip -k dist/yourfile.min.js
+      # Inka files or folders add cheyachu
+
+    - name: Commit and Push changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add dist/yourfile.min.js.gz
+        git commit -m 'Minify, uglify and gzip files'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
