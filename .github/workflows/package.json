@@ -1,0 +1,11 @@
+{
+  "name": "cursor(1).js",
+  "version": "1.0.0",
+  "scripts": {
+    "minify": "terser src/yourfile.js -o dist/yourfile.min.js --compress --mangle",
+    "gzip": "gzip -k dist/yourfile.min.js"
+  },
+  "devDependencies": {
+    "terser": "^5.0.0"
+  }
+}
